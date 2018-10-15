@@ -1,0 +1,53 @@
+type Articulo @pgTable(name: "articulo") {
+  id: Int! @unique
+  activo: Boolean! @default(value: true)
+  articulo_detalles: [Articulo_detalle!]!
+  id_menu: Menu @pgRelation(column: "id_menu")
+  nombre: String! @unique
+  tiempo_preparacion: DateTime # Type 'time without time zone' is not yet supported.
+  valor: Float!
+}
+
+type Articulo_detalle @pgTable(name: "articulo_detalle") {
+  id: Int! @unique
+  activo: Boolean! @default(value: true)
+  cantidad: Int!
+  id_articulo: Articulo @pgRelation(column: "id_articulo")
+  id_producto: Producto @pgRelation(column: "id_producto")
+}
+
+type Menu @pgTable(name: "menu") {
+  id: Int! @unique
+  activo: Boolean! @default(value: true)
+  articulos: [Articulo!]!
+  nombre: String! @unique
+}
+
+type Producto @pgTable(name: "producto") {
+  id: Int! @unique
+  activo: Boolean! @default(value: true)
+  articulo_detalles: [Articulo_detalle!]!
+  nombre: String! @unique
+  stock: Int!
+  valor: Float!
+}
+
+type Rol @pgTable(name: "rol") {
+  id: Int! @unique
+  activo: Boolean! @default(value: true)
+  nombre: String! @unique
+}
+
+type Usuarios @pgTable(name: "usuarios") {
+  id: Int! @unique
+  activo: Boolean! @default(value: true)
+  apellido: String
+  email: String @unique
+  estado: String @default(value: "REGISTRADO")
+  img: String
+  nombre: String
+  password: String
+  rol: String @default(value: "USUARIO")
+  social: Boolean
+  usuario: String @unique
+}
